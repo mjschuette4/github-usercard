@@ -42,11 +42,12 @@ const followersArray = [
 ];
 
 followersArray.forEach( user => {
-  axios.get(`https://api.github.com/users/mjschuete4/followers`)
+  axios.get(`https://api.github.com/users/${user}`)
   .then( data => {
     const cardFormat = cardCreator(data.data);
     const cards = document.querySelector('.cards');
     cards.appendChild(cardFormat);
+    console.log(data);
   })
   .catch(err => err)
 })
@@ -98,11 +99,9 @@ function cardCreator(info){
     cardInfo.append(following);
     cardInfo.append(bio);
 
-  const anchor = info.html_url;
-
   img.src = info.avatar_url;
   name.textContent = `name: ${info.name}`;
-  username.textContent = `username: ${info.username}`;
+  username.textContent = `username: ${info.login}`;
   location.textContent = `location: ${info.location}`;
   profileAnchor.setAttribute(`href`, info.html_url);
   profileAnchor.textContent = `${info.html_url}`;
